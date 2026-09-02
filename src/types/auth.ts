@@ -16,3 +16,13 @@ export interface User{
     email: string;
     created_at: Date;
 }
+
+export interface JwtPayload{
+    id: number;
+}
+
+export interface AuthenticatedUser{
+    id: number;
+    username: string;
+    email: string;
+}

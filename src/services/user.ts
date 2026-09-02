@@ -28,6 +28,34 @@ export async function findUserByEmail(email: string){
         }
     }
 }
+
+export async function findUserByID(id: number){
+    const query = "SELECT * FROM users WHERE id = $1";
+    const values = [id];
+    try{
+        const result = await pool.query(query, values);
+        if(result.rowCount! > 0){
+            console.log("user found");
+            return {
+                user: result.rows[0],
+                error: null
+            }
+        }else{
+            return {
+                user: undefined,
+                error: null
+            }
+        }
+    }catch(err){
+        console.log("----->service/user.ts:findUserByID ERROR!!");
+        return{
+            user: null,
+            error: err
+        }
+    }
+}
+
+
 export function validateJoiFormat(format: object, schema: Joi.Schema){
     const {error, value} = schema.validate(format);
     if(error){

@@ -2,9 +2,11 @@ import "dotenv/config";
 import { authRouter } from "./routes/authRoutes";
 import app from "./app";
 import pool from "./database/pool";
-
-
+import { toursRouter } from "./routes/toursRoutes";
+import { logger } from "./middleware/logger";
+app.use(logger);
 app.use('/api/auth/', authRouter);
+app.use('/api/tours', toursRouter);
 
 const PORT = process.env.PORT || 6767;
 

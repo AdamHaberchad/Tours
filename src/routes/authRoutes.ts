@@ -1,6 +1,6 @@
 import express from "express";
-import pool from "../database/pool";
 import { Request, Response } from "express";
+
 import { RegisterValidation } from "../middleware/registerValidation";
 import { loginValidation } from "../middleware/loginValidation";
 import { insertUser } from "../controllers/registerUser";
