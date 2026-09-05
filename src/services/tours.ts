@@ -53,4 +53,32 @@ export async function getToursBySlug(slug:string){
             error: error
         }
     }
+};
+
+export async function getToursByID(id:number){
+    const query = "SELECT * FROM tours WHERE id = $1";
+    const values = [id];
+
+    try{
+        const result = await pool.query(query, values);
+        if(result.rowCount! >0){
+            console.log("------>getToursByID: Done!");
+            return{
+                tours: result.rows,
+                error: null
+            }
+        }else{
+            console.log(`------>getToursByID: tours with slug: ${id} doesn't exist!`);
+            return{
+                tours: null,
+                error: null
+            }
+        }
+    }catch(error){
+        console.log("------>getToursByID: something went wrong! "+error);
+        return{
+            tours: null,
+            error: error
+        }
+    }
 }

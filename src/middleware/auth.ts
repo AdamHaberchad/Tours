@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { findUserByID } from "../services/user";
+import { UserRole } from "../types/auth";
 import "dotenv/config";
 
 export async function authenticate(req:Request, res: Response, next:NextFunction){
@@ -19,7 +20,8 @@ export async function authenticate(req:Request, res: Response, next:NextFunction
         req.user = {
             id: result.user.id,
             username: result.user.username,
-            email: result.user.email
+            email: result.user.email,
+            role: result.user.role
         }
         console.log("JWT verified successfully");
         next();
@@ -29,4 +31,22 @@ export async function authenticate(req:Request, res: Response, next:NextFunction
             message: "Invalid or expired token"
         });
     }
+};
+
+export function authorize(role: UserRole){
+    return function(req:Request, res: Response, next: NextFunction){
+        if(!req.user){
+            return res.status(401).json({
+                message: "Authentication required"
+            });
+        }
+        if(req.user.role !== role){
+            return res.status(403).json({
+                message: "Forbidden"
+            });
+        }
+        next();
+
+        
+    };
 }
