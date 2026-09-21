@@ -13,7 +13,7 @@ toursRouter.get('/', async (req: Request, res: Response)=>{
     if(toursGetter.error) return res.status(500).send(`Something went wrong: ${toursGetter.error}`);
     if(toursGetter.tours?.length === 0) return res.send(`No tours found`);
 
-    return res.send(toursGetter.tours);
+    return res.json(toursGetter.tours);
 
 });
 
