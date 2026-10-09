@@ -24,10 +24,9 @@ toursRouter.get('/:slug', async (req:Request, res: Response)=>{
 
     return res.send(toursGetter.tours);
 
-
 });
 
-toursRouter.post('/', authenticate, authorize("ADMIN"), validateTours, insertTours);
+toursRouter.post('/', authenticate, authorize("USER"), validateTours, insertTours);
 toursRouter.delete('/:id', authenticate, authorize("ADMIN"), deleteTours);
 toursRouter.patch('/:id', authenticate, authorize("ADMIN"), patchToursValidation, patchTours);
 
